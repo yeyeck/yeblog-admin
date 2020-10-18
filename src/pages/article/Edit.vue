@@ -291,7 +291,7 @@ export default {
       this.$axios.put('/api/article/cache', {
         id: this.article.id,
         title: this.article.title,
-        abstractText: this.article.addLabel,
+        abstractText: this.article.abstractText,
         contentMd: this.article.contentMd,
         labels: this.article.labels,
         status: this.article.status
