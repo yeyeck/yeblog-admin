@@ -12,9 +12,10 @@
           <div>
            <mavon-editor v-model="article.contentMd" ref="md"
            :externalLink="externalLink"
-           codeStyle="github"
+           codeStyle="tomorrow-night-bright"
            @change="markdownChange"
            @imgAdd="uploadImge"
+           :tabSize="4"
            style="height: 700px"></mavon-editor>
           </div>
         </q-item-section>
@@ -25,12 +26,14 @@
           <strong>摘要</strong>
         </q-item-section>
       </q-item>
-      <q-separator/>
       <q-item>
         <q-item-section>
-          <div>
-            <q-input v-model="article.abstractText"  filled type="textarea" counter maxlength="150" placeholder="请输入摘要..."/>
-          </div>
+          <q-input v-model="article.abstractText"  filled type="textarea" counter maxlength="150" placeholder="请输入摘要..."/>
+        </q-item-section>
+      </q-item>
+      <q-item>
+        <q-item-section>
+          <q-input v-model="article.keywords"  filled counter maxlength="150" label="SEO关键字" hint="输入关键词，以','（英文逗号）隔开"/>
         </q-item-section>
       </q-item>
       <q-separator/>
@@ -108,6 +111,7 @@ export default {
         status: 0,
         title: '',
         abstractText: '',
+        keywords: '',
         contentMd: '',
         contentHtml: '',
         labels: [],
@@ -178,6 +182,7 @@ export default {
       this.article.status = articleData.status
       this.article.title = articleData.title
       this.article.abstractText = articleData.abstractText
+      this.article.keywords = articleData.keywords
       this.article.contentMd = articleData.contentMd
       this.article.labels = articleData.labels
       this.article.categoryId = articleData.categoryId
@@ -206,6 +211,9 @@ export default {
               this.clearCache()
               this.$router.push('/article/status/published')
             }
+          }).catch(error => {
+            this.article.status = 0
+            console.log(error)
           })
       } else {
         this.update()
@@ -288,12 +296,17 @@ export default {
       this.newLabel = ''
     },
     cache () {
+      const list = []
+      this.labels.forEach(label => {
+        list.push(label)
+      })
       this.$axios.put('/api/article/cache', {
         id: this.article.id,
         title: this.article.title,
-        abstractText: this.article.addLabel,
+        abstractText: this.article.abstractText,
+        keywords: this.article.keywords,
         contentMd: this.article.contentMd,
-        labels: this.article.labels,
+        labels: list,
         status: this.article.status
       }).then(response => {
         console.log('caching success')
