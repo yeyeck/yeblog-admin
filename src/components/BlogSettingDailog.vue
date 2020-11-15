@@ -11,6 +11,10 @@
             <td>{{siteName}}</td>
           </tr>
           <tr>
+            <td class="text-right">副标题：</td>
+            <td>{{subTitle}}</td>
+          </tr>
+          <tr>
             <td class="text-right">网站描述：</td>
             <td>{{description}}</td>
           </tr>
@@ -52,6 +56,9 @@
 export default {
   props: {
     siteName: {
+      type: String
+    },
+    subTitle: {
       type: String
     },
     description: {

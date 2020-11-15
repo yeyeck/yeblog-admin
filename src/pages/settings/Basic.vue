@@ -15,6 +15,10 @@
         <td class="col-8">{{siteInfo.siteName}}</td>
       </tr>
       <tr>
+        <td class="col-4 text-right">副标题：</td>
+        <td class="col-8">{{siteInfo.subTitle}}</td>
+      </tr>
+      <tr>
         <td class="col-4 text-right">网站描述：</td>
         <td class="col-8">{{siteInfo.description}}</td>
       </tr>
@@ -56,10 +60,13 @@
           <q-input outlined v-model="form.siteName" label="站点名称" lazy-rules
           :rules="[val => val && val.length > 0 || '请输入站点名称']"/>
         </q-card-section>
+        <q-card-section>
+          <q-input outlined v-model="form.subTitle" label="副标题"/>
+        </q-card-section>
          <q-card-section>
           <q-input type="textarea" autogrow outlined v-model="form.description" label="网站描述"/>
         </q-card-section>
-         <q-card-section>
+        <q-card-section>
           <q-input outlined v-model="form.keywords" label="关键词"/>
         </q-card-section>
         <q-card-section>
@@ -106,6 +113,7 @@ export default {
       siteInfo: {
         siteName: '',
         domain: '',
+        subTitle: '',
         icpRecord: '',
         icpRecordUrl: '',
         psRecord: '',
@@ -116,6 +124,7 @@ export default {
       form: {
         siteName: '',
         domain: '',
+        subTitle: '',
         icpRecord: '',
         icpRecordUrl: '',
         psRecord: '',
@@ -138,6 +147,7 @@ export default {
         component: BlogSettingDailog,
         parent: this,
         siteName: this.form.siteName,
+        subTitle: this.form.subTitle,
         domain: this.form.domain,
         icpRecord: this.form.icpRecord,
         icpRecordUrl: this.form.icpRecordUrl,
